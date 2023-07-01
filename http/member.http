@@ -1,0 +1,19 @@
+POST localhost:8080/members/signup
+Content-Type: application/json
+
+{
+    "email": "test@test",
+    "name": {
+        "first": "John",
+        "last": "Doe"
+    },
+    "password": "1234"
+}
+###
+POST localhost:8080/members/signin
+Content-Type: application/json
+
+{
+"email": "test@test",
+"password": "1234"
+}
