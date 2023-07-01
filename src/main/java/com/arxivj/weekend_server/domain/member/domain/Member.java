@@ -1,7 +1,7 @@
 package com.arxivj.weekend_server.domain.member.domain;
-
 import com.arxivj.weekend_server.domain.model.Email;
 import com.arxivj.weekend_server.domain.model.Name;
+import com.arxivj.weekend_server.global.config.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Table(name = "member")
 @NoArgsConstructor
-public class Member {
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
