@@ -31,7 +31,6 @@ public class MemberApi {
     @PostMapping("/signin")
     public ResponseEntity<String> login(@RequestBody @Valid final SignInRequest dto, HttpServletResponse response){
         memberSignInService.doSignIn(dto, response);
-        System.out.println("test");
         return new ResponseEntity<>("Sign in successfully!", HttpStatus.OK);
     }
 

@@ -4,6 +4,7 @@ package com.arxivj.weekend_server.domain.member.application;
 import com.arxivj.weekend_server.domain.member.dao.MemberFindDao;
 import com.arxivj.weekend_server.domain.member.domain.Member;
 import com.arxivj.weekend_server.domain.member.dto.SignInRequest;
+import com.arxivj.weekend_server.domain.member.exception.EmailNotFoundException;
 import com.arxivj.weekend_server.domain.member.exception.InvalidPasswordsException;
 import com.arxivj.weekend_server.domain.model.Email;
 import com.arxivj.weekend_server.global.util.CookieUtil;
@@ -28,6 +29,9 @@ public class MemberSignInService {
     public void doSignIn(final SignInRequest dto, HttpServletResponse response) {
         Email email = dto.getEmail();
         Member member = memberFindDao.findByEmail(email);
+        if(member == null){
+            throw new EmailNotFoundException(email);
+        }
         String enteredPassword = dto.getPassword();
         String salt = member.getSalt();
         String hashPassword = PasswordEncoder.hashPassword(enteredPassword, salt);

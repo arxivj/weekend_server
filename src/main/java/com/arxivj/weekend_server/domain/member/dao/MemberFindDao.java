@@ -29,7 +29,7 @@ public class MemberFindDao {
     }
 
     public Member findByEmail(final Email email) {
-        return memberRepository.findByEmail(email).orElseThrow(() -> new EmailNotFoundException(email.getValue()));
+        return memberRepository.findByEmail(email).orElseThrow(() -> new EmailNotFoundException(email));
     }
 
 }
