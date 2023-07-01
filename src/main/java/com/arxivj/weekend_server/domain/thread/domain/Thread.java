@@ -35,13 +35,14 @@ public class Thread extends MutableBaseEntity {
     private Member member;
 
     @Builder
-    public Thread(Long id, String title, String content, long viewCount, long replyCount, PreserveState preserveState){
+    public Thread(Long id, String title, String content, long viewCount, long replyCount, PreserveState preserveState, Member member){
         this.id = id;
         this.title = title;
         this.content = content;
         this.viewCount = viewCount;
         this.replyCount = replyCount;
         this.preserveState = preserveState;
+        this.member = member;
     }
 
     public void updatePreserveState(){
