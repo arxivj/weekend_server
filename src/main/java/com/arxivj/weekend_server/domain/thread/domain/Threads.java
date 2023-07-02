@@ -7,12 +7,14 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Setter
 @Table(name = "threads")
 @NoArgsConstructor
 public class Threads extends MutableBaseEntity {
@@ -36,7 +38,8 @@ public class Threads extends MutableBaseEntity {
     @Embedded
     private PreserveState preserveState;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="member_id")
     private Member member;
 
@@ -47,7 +50,7 @@ public class Threads extends MutableBaseEntity {
         this.content = content;
         this.viewCount = viewCount;
         this.replyCount = replyCount;
-        this.preserveState = preserveState;
+        this.preserveState = preserveState == null ? new PreserveState() : preserveState;
         this.member = member;
     }
 
@@ -56,6 +59,9 @@ public class Threads extends MutableBaseEntity {
         this.preserveState.setDeletedAt(LocalDateTime.now());
     }
 
+
+    // Entity의 상태를 이용하여 Dto를 생성하는 로직이라 여기 적음
+    // 그러나 Dto 클래스에 적어도 무관. 그러면 Dto 변환 로직을 Dto 클래스에서 캡슐화 할 수 있음
     public ThreadDto.PostResponse toPostResponse() {
         return ThreadDto.PostResponse.builder()
                 .id(this.id)

@@ -6,10 +6,12 @@ import com.arxivj.weekend_server.domain.model.Email;
 import com.arxivj.weekend_server.domain.thread.application.ThreadService;
 import com.arxivj.weekend_server.domain.thread.dao.ThreadDao;
 import com.arxivj.weekend_server.domain.thread.dao.ThreadRepository;
-import com.arxivj.weekend_server.domain.thread.domain.Threads;
 import com.arxivj.weekend_server.domain.thread.dto.ThreadDto;
 import com.arxivj.weekend_server.global.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/thread")
+    @RequestMapping("/thread")
 @RequiredArgsConstructor
 public class ThreadApi {
 
@@ -37,11 +39,14 @@ public class ThreadApi {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    //TODO: Get으로 게시물 리스트 요청 남음
+    //TODO: Get으로 게시물 리스트 요청, Thread 방식인데 Detail Page 필요할까?
     //Get (전체 게시물)
     @GetMapping
-    public ResponseEntity<HttpStatus> getThreads(Optional<Integer> page) {
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<ThreadDto.GetResponse> getThreads(
+            @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC)
+            Pageable pageable) {
+        ThreadDto.GetResponse response = threadService.getThreadList(pageable);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     //Get (정렬된 게시물들)

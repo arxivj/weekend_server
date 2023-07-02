@@ -74,7 +74,9 @@ public class JwtUtil {
     }
 
     public static Email getEmailFromAuthorization(String bearerToken){
+        log.info("bearerToken = {}", bearerToken);
         String token = bearerToken.replace("Bearer ", "");
+        log.info("token = {}", token);
         DecodedJWT decodedJWT = JWT.decode(token);
         String emailValue = decodedJWT.getClaim("email").asString();
         return Email.of(emailValue);

@@ -9,7 +9,7 @@ Content-Type: application/json
     },
     "password": "1234"
 }
-###
+### 로그인
 POST localhost:8080/members/signin
 Content-Type: application/json
 
@@ -17,3 +17,34 @@ Content-Type: application/json
 "email": "test@test",
 "password": "1234"
 }
+
+###
+GET http://localhost:8080/thread
+Content-Type: application/json
+
+###
+POST http://localhost:8080/thread
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJEb2VKb2huIiwiZXhwIjoxNjg4MzAzMzAxLCJlbWFpbCI6InRlc3RAdGVzdCJ9.nwtujFtD5yKU34hzuzhElORrihXY6MwqWglgR6tdD3Hq-7ItJsw-vtBWtk7SVekEh857eXhC0oQywW0mvTkrxA
+Content-Type: application/json
+
+{
+  "title": "Thread title",
+  "content": "Thread content",
+  "tags": ["tag1", "tag2"]
+}
+
+###
+PATCH http://localhost:8080/thread/5
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJEb2VKb2huIiwiZXhwIjoxNjg4MzAzMzAxLCJlbWFpbCI6InRlc3RAdGVzdCJ9.nwtujFtD5yKU34hzuzhElORrihXY6MwqWglgR6tdD3Hq-7ItJsw-vtBWtk7SVekEh857eXhC0oQywW0mvTkrxA
+Content-Type: application/json
+
+{
+  "title": "Updated title",
+  "content": "Updated content",
+  "tags": ["newTag1", "newTag2"]
+}
+
+###
+DELETE http://localhost:8080/thread/3
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJEb2VKb2huIiwiZXhwIjoxNjg4MzAzMzAxLCJlbWFpbCI6InRlc3RAdGVzdCJ9.nwtujFtD5yKU34hzuzhElORrihXY6MwqWglgR6tdD3Hq-7ItJsw-vtBWtk7SVekEh857eXhC0oQywW0mvTkrxA
+Content-Type: application/json

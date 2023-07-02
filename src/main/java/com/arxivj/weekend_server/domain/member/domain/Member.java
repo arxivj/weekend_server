@@ -3,6 +3,7 @@ import com.arxivj.weekend_server.domain.model.Email;
 import com.arxivj.weekend_server.domain.model.Name;
 import com.arxivj.weekend_server.global.config.BaseEntity;
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
