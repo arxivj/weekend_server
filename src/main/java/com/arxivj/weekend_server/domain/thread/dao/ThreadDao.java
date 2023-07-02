@@ -15,4 +15,9 @@ public class ThreadDao {
     public Threads findThreadByMemberAndId(Member member, Long threadId){
         return this.threadRepository.findByMemberAndId(member, threadId);
     }
+
+    public Threads findById(final Long id){
+        return threadRepository.findById(id).orElseThrow(RuntimeException::new);
+    }
+
 }

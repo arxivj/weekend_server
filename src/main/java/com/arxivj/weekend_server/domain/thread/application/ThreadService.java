@@ -19,16 +19,31 @@ public class ThreadService {
     private final ThreadRepository threadRepository;
     private final ThreadDao threadDao;
 
-    public void createThread(ThreadDto.Request requestDto, Member member) {
+    public ThreadDto.PostResponse createThread(ThreadDto.Request requestDto, Member member) {
         Threads thread = Threads.builder()
                 .title(requestDto.getTitle())
                 .content(requestDto.getContent())
                 .member(member)
                 .build();
         this.threadRepository.save(thread);
+        return thread.toPostResponse();
     }
 
-    public void deleteThreadByMemberId(Member member, Long threadId){
+    public ThreadDto.PatchResponse updateThreadByMemberAndId(ThreadDto.Request requestDto, Member member, Long threadId) {
+        Threads thread = threadDao.findThreadByMemberAndId(member, threadId);
+        return updateThread(requestDto, thread);
+    }
+
+    public ThreadDto.PatchResponse updateThread(ThreadDto.Request requestDto, Threads thread) {
+        Threads updatedThread = thread.toBuilder()
+                .title(requestDto.getTitle())
+                .content(requestDto.getContent())
+                .build();
+        threadRepository.save(updatedThread);
+        return updatedThread.toPatchResponse();
+    }
+
+    public void deleteThreadByMemberAndId(Member member, Long threadId) {
         Threads thread = threadDao.findThreadByMemberAndId(member, threadId);
         this.threadRepository.delete(thread);
     }

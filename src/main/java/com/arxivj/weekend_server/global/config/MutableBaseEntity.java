@@ -13,6 +13,6 @@ import java.time.LocalDateTime;
 public abstract class MutableBaseEntity extends BaseEntity{
     @LastModifiedDate
     @Column(updatable = true)
-    private LocalDateTime modifiedAt;
+    protected LocalDateTime modifiedAt;
 
 }

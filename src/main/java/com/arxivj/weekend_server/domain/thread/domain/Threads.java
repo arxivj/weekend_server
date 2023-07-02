@@ -1,6 +1,7 @@
 package com.arxivj.weekend_server.domain.thread.domain;
 import com.arxivj.weekend_server.domain.member.domain.Member;
 import com.arxivj.weekend_server.domain.model.PreserveState;
+import com.arxivj.weekend_server.domain.thread.dto.ThreadDto;
 import com.arxivj.weekend_server.global.config.MutableBaseEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -39,7 +40,7 @@ public class Threads extends MutableBaseEntity {
     @JoinColumn(name="member_id")
     private Member member;
 
-    @Builder
+    @Builder(toBuilder = true)
     public Threads(Long id, String title, String content, long viewCount, long replyCount, PreserveState preserveState, Member member){
         this.id = id;
         this.title = title;
@@ -55,4 +56,27 @@ public class Threads extends MutableBaseEntity {
         this.preserveState.setDeletedAt(LocalDateTime.now());
     }
 
+    public ThreadDto.PostResponse toPostResponse() {
+        return ThreadDto.PostResponse.builder()
+                .id(this.id)
+                .title(this.title)
+                .content(this.content)
+                .viewCount(this.viewCount)
+                .replyCount(this.replyCount)
+                .member(this.member)
+                .createdAt(this.modifiedAt)
+                .build();
+    }
+
+    public ThreadDto.PatchResponse toPatchResponse() {
+        return ThreadDto.PatchResponse.builder()
+                .id(this.id)
+                .title(this.title)
+                .content(this.content)
+                .viewCount(this.viewCount)
+                .replyCount(this.replyCount)
+                .member(this.member)
+                .modifiedAt(this.modifiedAt)
+                .build();
+    }
 }
