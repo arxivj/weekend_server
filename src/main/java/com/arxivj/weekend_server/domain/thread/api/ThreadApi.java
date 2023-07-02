@@ -30,32 +30,39 @@ public class ThreadApi {
         //TODO: 디코딩 하기 전에 토큰 검증이 필요할까?
         Email email = JwtUtil.getEmailFromAuthorization(authorization);
         Member member = memberFindDao.findByEmail(email);
-        // thread를 생성하는 서비스 (dto, email)
-
+        threadService.createThread(requestDto, member);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     //Get (전체 게시물)
     @GetMapping
-    public ResponseEntity<HttpStatus> getThreads(Optional<Integer> page){
+    public ResponseEntity<HttpStatus> getThreads(Optional<Integer> page) {
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     //Get (정렬된 게시물들)
     @GetMapping("/{sort-type}")
     public ResponseEntity<HttpStatus> getSortedThreads(@PathVariable("sort-type") String sortType,
-                                                       Optional<Integer> page){
+                                                       Optional<Integer> page) {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     //Patch
     @PatchMapping("/{thread-id}")
-    public ResponseEntity<HttpStatus> patchThread(@PathVariable("thread-id") String threadId){
+    public ResponseEntity<HttpStatus> patchThread(@RequestHeader("Authorization") String authorization,
+                                                  @PathVariable("thread-id") Long threadId) {
+        Email email = JwtUtil.getEmailFromAuthorization(authorization);
+        Member member = memberFindDao.findByEmail(email);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     //Delete
     @DeleteMapping("/{thread-id}")
-    public ResponseEntity<HttpStatus> deleteThread(@PathVariable("thread-id") String threadId){
+    public ResponseEntity<HttpStatus> deleteThread(@RequestHeader("Authorization") String authorization,
+                                                   @PathVariable("thread-id") Long threadId) {
+        Email email = JwtUtil.getEmailFromAuthorization(authorization);
+        Member member = memberFindDao.findByEmail(email);
+        threadService.deleteThreadByMemberId(member, threadId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
