@@ -1,6 +1,14 @@
 package com.arxivj.weekend_server.domain.thread.api;
 
+import com.arxivj.weekend_server.domain.member.dao.MemberFindDao;
+import com.arxivj.weekend_server.domain.member.dao.MemberRepository;
+import com.arxivj.weekend_server.domain.member.domain.Member;
+import com.arxivj.weekend_server.domain.model.Email;
+import com.arxivj.weekend_server.domain.thread.application.ThreadService;
 import com.arxivj.weekend_server.domain.thread.dto.ThreadDto;
+import com.arxivj.weekend_server.global.util.JwtUtil;
+import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,13 +17,21 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/thread")
+@RequiredArgsConstructor
 public class ThreadApi {
+
+    private final MemberFindDao memberFindDao;
+    private final ThreadService threadService;
 
     //Post
     @PostMapping
     public ResponseEntity<HttpStatus> postThread(@RequestHeader("Authorization") String authorization,
-                                                 @RequestBody ThreadDto.Request dto) {
-        //TODO: 사용자의 식별정보는 payload에 담겨있으므로 서비스로직 작성시 참고
+                                                 @RequestBody ThreadDto.Request requestDto) {
+        //TODO: 디코딩 하기 전에 토큰 검증이 필요할까?
+        Email email = JwtUtil.getEmailFromAuthorization(authorization);
+        Member member = memberFindDao.findByEmail(email);
+        // thread를 생성하는 서비스 (dto, email)
+
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

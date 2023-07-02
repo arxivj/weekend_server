@@ -6,13 +6,15 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Table(name = "thread")
+@Table(name = "threads")
 @NoArgsConstructor
-public class Thread extends MutableBaseEntity {
+public class Threads extends MutableBaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,10 +26,13 @@ public class Thread extends MutableBaseEntity {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    @ColumnDefault(value="0")
     private long viewCount;
 
+    @ColumnDefault(value="0")
     private long replyCount;
 
+    @Embedded
     private PreserveState preserveState;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -35,7 +40,7 @@ public class Thread extends MutableBaseEntity {
     private Member member;
 
     @Builder
-    public Thread(Long id, String title, String content, long viewCount, long replyCount, PreserveState preserveState, Member member){
+    public Threads(Long id, String title, String content, long viewCount, long replyCount, PreserveState preserveState, Member member){
         this.id = id;
         this.title = title;
         this.content = content;

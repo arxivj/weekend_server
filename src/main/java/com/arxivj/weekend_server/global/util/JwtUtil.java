@@ -5,9 +5,11 @@ import com.arxivj.weekend_server.domain.model.Email;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.*;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -70,6 +72,14 @@ public class JwtUtil {
     public static void accessTokenSetHeader(HttpServletResponse response, String accessToken) {
         response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + accessToken);
     }
+
+    public static Email getEmailFromAuthorization(String bearerToken){
+        String token = bearerToken.replace("Bearer ", "");
+        DecodedJWT decodedJWT = JWT.decode(token);
+        String emailValue = decodedJWT.getClaim("email").asString();
+        return Email.of(emailValue);
+    }
+
 
 
     public static void validateAccessToken(String accessToken) {
