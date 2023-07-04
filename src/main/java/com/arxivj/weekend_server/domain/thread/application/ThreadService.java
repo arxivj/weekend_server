@@ -49,21 +49,15 @@ public class ThreadService {
         return updateThread(requestDto, thread);
     }
 
-//    public ThreadDto.PatchResponse updateThread(ThreadDto.Request requestDto, Threads thread) {
-//        Threads updatedThread = thread.toBuilder()
-//                .title(requestDto.getTitle())
-//                .content(requestDto.getContent())
-//                .build();
-//        threadRepository.save(updatedThread);
-//        return updatedThread.toPatchResponse();
-//    }
-
     public ThreadDto.PatchResponse updateThread(ThreadDto.Request requestDto, Threads thread) {
-        thread.setTitle(requestDto.getTitle());
-        thread.setContent(requestDto.getContent());
-        threadRepository.save(thread);
-        return thread.toPatchResponse();
+        Threads updatedThread = thread.toBuilder()
+                .title(requestDto.getTitle())
+                .content(requestDto.getContent())
+                .build();
+        threadRepository.save(updatedThread);
+        return updatedThread.toPatchResponse();
     }
+
 
     public void deleteThreadByMemberAndId(Member member, Long threadId) {
         Threads thread = threadDao.findThreadByMemberAndId(member, threadId);
