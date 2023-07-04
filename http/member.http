@@ -34,7 +34,7 @@ Content-Type: application/json
 }
 
 ###
-PATCH http://localhost:8080/thread/5
+PATCH http://localhost:8080/thread/11
 Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJEb2VKb2huIiwiZXhwIjoxNjg4MzAzMzAxLCJlbWFpbCI6InRlc3RAdGVzdCJ9.nwtujFtD5yKU34hzuzhElORrihXY6MwqWglgR6tdD3Hq-7ItJsw-vtBWtk7SVekEh857eXhC0oQywW0mvTkrxA
 Content-Type: application/json
 
@@ -45,6 +45,6 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:8080/thread/3
+DELETE http://localhost:8080/thread/9
 Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJEb2VKb2huIiwiZXhwIjoxNjg4MzAzMzAxLCJlbWFpbCI6InRlc3RAdGVzdCJ9.nwtujFtD5yKU34hzuzhElORrihXY6MwqWglgR6tdD3Hq-7ItJsw-vtBWtk7SVekEh857eXhC0oQywW0mvTkrxA
 Content-Type: application/json
